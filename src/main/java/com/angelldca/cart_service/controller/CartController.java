@@ -4,20 +4,25 @@ package com.angelldca.cart_service.controller;
 import com.angelldca.cart_service.persistence.entity.Cart;
 import com.angelldca.cart_service.service.CartService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 
 
 @RestController
+@RefreshScope
 @RequestMapping("/cart")
 public class CartController {
+
+
 
     private final CartService cartService;
     @Value("${price.discount: 35%}")
     private String discount;
 
-    public CartController(CartService cartService) {
+    public CartController( CartService cartService) {
+
         this.cartService = cartService;
     }
     @GetMapping
