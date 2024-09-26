@@ -14,11 +14,13 @@ import java.util.concurrent.CountDownLatch;
 @Slf4j
 public class Consumer {
     private CountDownLatch latch = new CountDownLatch(1);
+    private Map<String, Object> lastMessage;
     @RabbitListener(queues = {"${angelldca.queue.name}"})
     public void receiver(@Payload Map<String, Object> productData ){
-        log.info("Recived message: "+ productData.toString());
+        log.info("Recived message: "+ productData);
         makeSlow();
         latch.countDown();
+        this.saveMessage(productData);
     }
 
 
@@ -32,5 +34,13 @@ public class Consumer {
 
     public CountDownLatch getLatch() {
         return latch;
+    }
+
+    public void saveMessage(Map<String, Object> message) {
+        this.lastMessage = message;
+    }
+
+    public Map<String, Object> getLastMessage() {
+        return lastMessage;
     }
 }

@@ -29,6 +29,10 @@ public class CartController {
     public String findAll(){
         return discount;
     }
+    @GetMapping("/msg")
+    public Object recivedMesage(){
+        return cartService.messageRecived();
+    }
 
     @PostMapping
     public Cart createCart(@RequestBody Cart cart){
